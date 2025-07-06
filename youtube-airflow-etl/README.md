@@ -186,11 +186,6 @@ docker compose up -d
 - **Historical data preservation** for trend analysis
 - **SaaS/product-analytics-ready** data model
 
-## Notes
-- Built to demonstrate product analytics mindset for SaaS roles in high-tech
-- Designed for learning and portfolio purposes
-- Can be extended for production use with proper monitoring and alerting
-
 ## Testing
 
 To run the test suite, ensure dependencies are installed and run:
