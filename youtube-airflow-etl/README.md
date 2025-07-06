@@ -4,7 +4,7 @@ This project is a product-oriented, end-to-end ETL pipeline designed for SaaS-st
 
 ## Project Goals
 - Simulate a SaaS analytics product for YouTube channels
-- Showcase my abilities as a data engineer
+- Showcase my ETL abilities as a data engineer
 
 ## Tech Stack
 - **Airflow**: DAG scheduling and orchestration (via Docker)
@@ -148,66 +148,37 @@ The transform layer enables:
 - **Content Strategy**: Performance optimization insights
 - **Market Intelligence**: Competitive analysis capabilities
 
-## How to Run
+## Quick Start
 
-### 1. Set up Environment
-Follow these steps to set up and run the project locally:
+### Prerequisites
+- Docker Desktop installed and running
+- YouTube Data API key ([Get one here](https://console.cloud.google.com/marketplace/product/google/youtube.googleapis.com))
 
-1. **Clone the repository**
-   ```sh
-   git clone https://github.com/YonatanHanasav/youtube-analytics-project.git
-   cd youtube-analytics-project
-   ```
-
-2. **Create a virtual environment**
-   ```sh
-   python -m venv venv
-   # Activate the virtual environment:
-   # On macOS/Linux:
-   source venv/bin/activate
-   # On Windows:
-   venv\Scripts\activate
-   ```
-
-3. **Install dependencies**
-   ```sh
-   pip install -r requirements.txt
-   ```
-
-4. **Set up environment variables**
-   Create a `.env` file in the project root (not included in the repo for security), use this template:
-
-   ```
-   YOUTUBE_API_KEY=your_youtube_api_key_here
-   DB_NAME=youtube_db
-   DB_USER=airflow
-   DB_PASSWORD=airflow
-   DB_HOST=postgres
-   DB_PORT=5432
-   BATCH_SIZE=50
-   MAX_CHANNELS=1000
-   ```
-
-### 2. Install Docker Desktop
-Ensure Docker Desktop is installed and running on your machine.
-
-### 3. Start the Pipeline
+### Setup & Run
 ```bash
-# Start all services
+# Clone and setup
+git clone https://github.com/YonatanHanasav/youtube-analytics-project.git
+cd youtube-analytics-project
+
+# Create .env file with your API key
+echo "YOUTUBE_API_KEY=your_api_key_here" > .env
+
+# Start the pipeline
 docker compose up -d
-# Wait for services to initialize (about 30 seconds)
+
+# Access Airflow UI: http://localhost:8080 (admin/admin)
+# Trigger the 'youtube_kpi_daily_batch' DAG
 ```
 
-### 4. Access Airflow
-- **URL**: http://localhost:8080
-- **Username**: `admin`
-- **Password**: `admin`
+## Screenshots
 
-### 5. Run the ETL Pipeline
-1. Go to the Airflow web interface
-2. Find the `youtube_kpi_daily_batch` DAG
-3. Click the "Play" button to trigger a manual run
-4. Monitor the execution in the Airflow UI
+### Airflow DAG Execution
+![Airflow DAG](images/Airflow.gif)
+*DAG execution showing successful ETL pipeline run*
+
+### Sample Data Output
+![Sample Data](images/PostgreSQL.gif)
+*Example of transformed business intelligence data in PostgreSQL*
 
 ## Configuration
 
