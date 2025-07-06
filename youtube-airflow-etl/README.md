@@ -174,10 +174,12 @@ docker compose up -d
 
 ### Airflow DAG Execution
 ![Airflow DAG](images/Airflow.gif)
+
 *DAG execution showing successful ETL pipeline run*
 
 ### Sample Data Output
 ![Sample Data](images/PostgreSQL.gif)
+
 *Example of transformed business intelligence data in PostgreSQL*
 
 ## Configuration
