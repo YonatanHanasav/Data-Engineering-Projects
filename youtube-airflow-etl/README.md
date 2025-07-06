@@ -83,14 +83,14 @@ The transform stage is where raw YouTube API data becomes actionable business in
 %% Vertical layout for better readability
 graph TB
     subgraph Raw_YouTube_API_Data
-        A1[channel_id\nUC_x5XG1OV2P6uZZ5FSM9Ttw]
-        A2[channel_name\nGoogle Developers]
-        A3[view_count\n125,000,000]
-        A4[subscriber_count\n2,500,000]
-        A5[video_count\n1,250]
-        A6[channel_creation_date\n2007-08-23]
-        A7[description\nGoogle Developers is...]
-        A8[country\nUS]
+        A1[channel_id<br/>UC_x5XG1OV2P6uZZ5FSM9Ttw]
+        A2[channel_name<br/>Google Developers]
+        A3[view_count<br/>125,000,000]
+        A4[subscriber_count<br/>2,500,000]
+        A5[video_count<br/>1,250]
+        A6[channel_creation_date<br/>2007-08-23]
+        A7[description<br/>Google Developers is...]
+        A8[country<br/>US]
     end
 
     subgraph Transform_Engine
@@ -101,14 +101,14 @@ graph TB
     end
 
     subgraph Business_Intelligence_Output
-        B1[subscriber_growth_rate\n2.34%]
-        B2[view_growth_rate\n1.56%]
-        B3[churn_flag\nfalse]
-        B4[views_per_video\n100,000]
-        B5[engagement_score\n312.5]
-        B6[potential_revenue\n$250,000]
-        B7[monetization_flag\ntrue]
-        B8[virality_score\n1.8]
+        B1[subscriber_growth_rate<br/>2.34%]
+        B2[view_growth_rate<br/>1.56%]
+        B3[churn_flag<br/>false]
+        B4[views_per_video<br/>100,000]
+        B5[engagement_score<br/>312.5]
+        B6[potential_revenue<br/>$250,000]
+        B7[monetization_flag<br/>true]
+        B8[virality_score<br/>1.8]
     end
 
     %% Logical connections
