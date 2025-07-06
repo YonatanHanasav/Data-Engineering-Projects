@@ -1,0 +1,6 @@
+# AWS Reddit Streaming Pipeline Dependencies
+# Core AWS SDK
+boto3>=1.26.0
+
+# Reddit API wrapper
+praw>=7.7.0

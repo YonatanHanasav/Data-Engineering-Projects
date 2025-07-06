@@ -1,0 +1,42 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+
+# Virtual environments
+venv/
+env/
+ENV/
+.Python
+
+# Packaging
+*.egg-info/
+build/
+dist/
+
+# Test/coverage
+.pytest_cache/
+.tox/
+.nox/
+.coverage
+.hypothesis/
+
+# Logs
+logs/
+*.log
+
+# OS files
+.DS_Store
+
+# Editor files
+.vscode/
+.idea/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Secrets
+.env
+
+# Data
+data/US_youtube_trending_data.csv
