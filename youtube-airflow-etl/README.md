@@ -73,39 +73,113 @@ flowchart TD
 - **data/data_preprocess.py**:  
   This script is used to preprocess, filter, or generate the `unique_channels.csv` file. It can be used to select a subset of channels, clean the input data, or transform raw channel lists into the format required by the ETL pipeline.
 
-## Data Model & KPIs Tracked
+## Transform Stage: Business Intelligence Engine
 
-### `channels` Table
-| Column                 | Description                       |
-|------------------------|-----------------------------------|
-| `channel_id`           | YouTube channel ID                |
-| `channel_name`         | Channel name                      |
-| `description`          | Channel description               |
-| `country`              | Channel country                   |
-| `channel_creation_date`| Channel creation date             |
-| `view_count`           | Lifetime views                    |
-| `subscriber_count`     | Lifetime subscribers              |
-| `video_count`          | Total videos                      |
+The transform stage is where raw YouTube API data becomes actionable business intelligence. This sophisticated transformation layer calculates 15+ business-relevant KPIs that would be valuable for a SaaS analytics platform.
 
-### `channel_kpis` Table (time-series, one row per channel per run)
-| Column                   | Description                                 |
-|--------------------------|---------------------------------------------|
-| `run_date`               | Date of snapshot                            |
-| `channel_id`             | YouTube channel ID                          |
-| `channel_name`           | Channel name                                |
-| `subscriber_growth_rate` | Daily % change in subscribers               |
-| `view_growth_rate`       | Daily % change in views                     |
-| `churn_flag`             | 1 if channel lost subscribers, else 0        |
-| `views_per_video`        | Lifetime views / video count                |
-| `subs_per_video`         | Lifetime subs / video count                 |
-| `new_video_count`        | Videos added since last run                 |
-| `channel_age_days`       | Days since channel creation                 |
-| `avg_daily_views`        | Average daily views (lifetime)              |
-| `avg_daily_subs`         | Average daily subs (lifetime)               |
-| `engagement_score`       | Composite engagement metric                 |
-| `potential_revenue`      | Estimated revenue (using CPM)               |
-| `monetization_flag`      | 1 if eligible for monetization, else 0      |
-| `virality_score`         | Custom virality metric                      |
+### Data Transformation: Before vs After
+
+```mermaid
+graph LR
+    subgraph "Raw YouTube API Data"
+        A1[channel_id<br/>UC_x5XG1OV2P6uZZ5FSM9Ttw]
+        A2[channel_name<br/>Google Developers]
+        A3[view_count<br/>125,000,000]
+        A4[subscriber_count<br/>2,500,000]
+        A5[video_count<br/>1,250]
+        A6[channel_creation_date<br/>2007-08-23]
+        A7[description<br/>Google Developers is...]
+        A8[country<br/>US]
+    end
+    
+    subgraph "Transform Engine"
+        T1[Historical Lookup]
+        T2[Growth Calculations]
+        T3[Business Logic]
+        T4[Revenue Estimation]
+    end
+    
+    subgraph "Business Intelligence Output"
+        B1[run_date<br/>2024-01-15]
+        B2[channel_id<br/>UC_x5XG1OV2P6uZZ5FSM9Ttw]
+        B3[subscriber_growth_rate<br/>2.34%]
+        B4[view_growth_rate<br/>1.56%]
+        B5[churn_flag<br/>false]
+        B6[views_per_video<br/>100,000]
+        B7[subs_per_video<br/>2,000]
+        B8[new_video_count<br/>3]
+        B9[channel_age_days<br/>6,000]
+        B10[avg_daily_views<br/>20,833]
+        B11[avg_daily_subs<br/>417]
+        B12[engagement_score<br/>312.5]
+        B13[potential_revenue<br/>$250,000]
+        B14[monetization_flag<br/>true]
+        B15[virality_score<br/>1.8]
+    end
+    
+    A1 --> T1
+    A2 --> T1
+    A3 --> T2
+    A4 --> T2
+    A5 --> T3
+    A6 --> T3
+    A7 --> T3
+    A8 --> T3
+    
+    T1 --> B1
+    T1 --> B2
+    T2 --> B3
+    T2 --> B4
+    T2 --> B5
+    T3 --> B6
+    T3 --> B7
+    T3 --> B8
+    T3 --> B9
+    T3 --> B10
+    T3 --> B11
+    T3 --> B12
+    T4 --> B13
+    T3 --> B14
+    T2 --> B15
+    
+    style A1 fill:#e1f5fe
+    style A2 fill:#e1f5fe
+    style A3 fill:#e1f5fe
+    style A4 fill:#e1f5fe
+    style A5 fill:#e1f5fe
+    style A6 fill:#e1f5fe
+    style A7 fill:#e1f5fe
+    style A8 fill:#e1f5fe
+    
+    style T1 fill:#fff3e0
+    style T2 fill:#fff3e0
+    style T3 fill:#fff3e0
+    style T4 fill:#fff3e0
+    
+    style B1 fill:#e8f5e8
+    style B2 fill:#e8f5e8
+    style B3 fill:#e8f5e8
+    style B4 fill:#e8f5e8
+    style B5 fill:#e8f5e8
+    style B6 fill:#e8f5e8
+    style B7 fill:#e8f5e8
+    style B8 fill:#e8f5e8
+    style B9 fill:#e8f5e8
+    style B10 fill:#e8f5e8
+    style B11 fill:#e8f5e8
+    style B12 fill:#e8f5e8
+    style B13 fill:#e8f5e8
+    style B14 fill:#e8f5e8
+    style B15 fill:#e8f5e8
+```
+
+### Business Impact
+
+The transform layer enables:
+- **Churn Prediction**: Early warning system for declining channels
+- **Revenue Forecasting**: Monetization potential assessment
+- **Content Strategy**: Performance optimization insights
+- **Market Intelligence**: Competitive analysis capabilities
 
 ## How to Run
 
