@@ -7,7 +7,7 @@ Each folder represents a standalone project with its own setup, tools, and docum
 ## Projects
 
 ### [AWS Reddit Streaming Pipeline](./aws-reddit-streaming-pipeline)
-Real-time Reddit ingestion pipeline using AWS (Kinesis, Lambda, S3), built on the free tier.
+Hourly Reddit ingestion pipeline using AWS (Lambda, S3, EventBridge, Glue, Athena and QuickSight).
 
 ### [YouTube Airflow ETL](./youtube-airflow-etl)
 Daily ETL pipeline using Airflow + PostgreSQL, ingesting data from the YouTube Data API.
