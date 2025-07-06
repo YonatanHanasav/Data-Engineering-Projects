@@ -186,11 +186,6 @@ docker compose up -d
 - **Historical data preservation** for trend analysis
 - **SaaS/product-analytics-ready** data model
 
-## Roadmap
-- **Streamlit Dashboard** - Interactive data visualization
-- **Alerting System** - Notifications for significant changes
-- **Performance Optimization** - Parallel processing and caching
-
 ## Notes
 - Built to demonstrate product analytics mindset for SaaS roles in high-tech
 - Designed for learning and portfolio purposes
