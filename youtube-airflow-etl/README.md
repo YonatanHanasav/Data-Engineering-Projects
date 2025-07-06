@@ -80,7 +80,7 @@ The transform stage is where raw YouTube API data becomes actionable business in
 ### Data Transformation: Before vs After
 
 ```mermaid
-%% Top-to-bottom layout for better spacing
+%% Vertical layout for better readability
 graph TB
     subgraph Raw_YouTube_API_Data
         A1[channel_id\nUC_x5XG1OV2P6uZZ5FSM9Ttw]
@@ -101,24 +101,17 @@ graph TB
     end
 
     subgraph Business_Intelligence_Output
-        B1[run_date\n2024-01-15]
-        B2[channel_id\nUC_x5XG1OV2P6uZZ5FSM9Ttw]
-        B3[subscriber_growth_rate\n2.34%]
-        B4[view_growth_rate\n1.56%]
-        B5[churn_flag\nfalse]
-        B6[views_per_video\n100,000]
-        B7[subs_per_video\n2,000]
-        B8[new_video_count\n3]
-        B9[channel_age_days\n6,000]
-        B10[avg_daily_views\n20,833]
-        B11[avg_daily_subs\n417]
-        B12[engagement_score\n312.5]
-        B13[potential_revenue\n$250,000]
-        B14[monetization_flag\ntrue]
-        B15[virality_score\n1.8]
+        B1[subscriber_growth_rate\n2.34%]
+        B2[view_growth_rate\n1.56%]
+        B3[churn_flag\nfalse]
+        B4[views_per_video\n100,000]
+        B5[engagement_score\n312.5]
+        B6[potential_revenue\n$250,000]
+        B7[monetization_flag\ntrue]
+        B8[virality_score\n1.8]
     end
 
-    %% Connections
+    %% Logical connections
     A1 --> T1
     A2 --> T1
     A3 --> T2
@@ -128,21 +121,14 @@ graph TB
     A7 --> T3
     A8 --> T3
 
-    T1 --> B1
-    T1 --> B2
+    T2 --> B1
+    T2 --> B2
     T2 --> B3
-    T2 --> B4
-    T2 --> B5
-    T3 --> B6
+    T3 --> B4
+    T3 --> B5
+    T4 --> B6
     T3 --> B7
-    T3 --> B8
-    T3 --> B9
-    T3 --> B10
-    T3 --> B11
-    T3 --> B12
-    T4 --> B13
-    T3 --> B14
-    T2 --> B15
+    T2 --> B8
 
     %% Styling for better visibility in dark theme
     classDef input fill:#d0ebff,stroke:#1c7ed6,color:#000;
@@ -151,7 +137,7 @@ graph TB
 
     class A1,A2,A3,A4,A5,A6,A7,A8 input
     class T1,T2,T3,T4 engine
-    class B1,B2,B3,B4,B5,B6,B7,B8,B9,B10,B11,B12,B13,B14,B15 output
+    class B1,B2,B3,B4,B5,B6,B7,B8 output
 ```
 
 ### Business Impact
