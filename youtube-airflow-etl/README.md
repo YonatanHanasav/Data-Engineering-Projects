@@ -75,48 +75,50 @@ flowchart TD
 
 ## Transform Stage: Business Intelligence Engine
 
-The transform stage is where raw YouTube API data becomes actionable business intelligence. This sophisticated transformation layer calculates 15+ business-relevant KPIs that would be valuable for a SaaS analytics platform.
+The transform stage is where raw YouTube API data becomes actionable business intelligence. This layer calculates business-relevant KPIs that would be valuable for a SaaS analytics platform.
 
 ### Data Transformation: Before vs After
 
 ```mermaid
-graph LR
-    subgraph "Raw YouTube API Data"
-        A1[channel_id<br/>UC_x5XG1OV2P6uZZ5FSM9Ttw]
-        A2[channel_name<br/>Google Developers]
-        A3[view_count<br/>125,000,000]
-        A4[subscriber_count<br/>2,500,000]
-        A5[video_count<br/>1,250]
-        A6[channel_creation_date<br/>2007-08-23]
-        A7[description<br/>Google Developers is...]
-        A8[country<br/>US]
+%% Top-to-bottom layout for better spacing
+graph TB
+    subgraph Raw_YouTube_API_Data
+        A1[channel_id\nUC_x5XG1OV2P6uZZ5FSM9Ttw]
+        A2[channel_name\nGoogle Developers]
+        A3[view_count\n125,000,000]
+        A4[subscriber_count\n2,500,000]
+        A5[video_count\n1,250]
+        A6[channel_creation_date\n2007-08-23]
+        A7[description\nGoogle Developers is...]
+        A8[country\nUS]
     end
-    
-    subgraph "Transform Engine"
+
+    subgraph Transform_Engine
         T1[Historical Lookup]
         T2[Growth Calculations]
         T3[Business Logic]
         T4[Revenue Estimation]
     end
-    
-    subgraph "Business Intelligence Output"
-        B1[run_date<br/>2024-01-15]
-        B2[channel_id<br/>UC_x5XG1OV2P6uZZ5FSM9Ttw]
-        B3[subscriber_growth_rate<br/>2.34%]
-        B4[view_growth_rate<br/>1.56%]
-        B5[churn_flag<br/>false]
-        B6[views_per_video<br/>100,000]
-        B7[subs_per_video<br/>2,000]
-        B8[new_video_count<br/>3]
-        B9[channel_age_days<br/>6,000]
-        B10[avg_daily_views<br/>20,833]
-        B11[avg_daily_subs<br/>417]
-        B12[engagement_score<br/>312.5]
-        B13[potential_revenue<br/>$250,000]
-        B14[monetization_flag<br/>true]
-        B15[virality_score<br/>1.8]
+
+    subgraph Business_Intelligence_Output
+        B1[run_date\n2024-01-15]
+        B2[channel_id\nUC_x5XG1OV2P6uZZ5FSM9Ttw]
+        B3[subscriber_growth_rate\n2.34%]
+        B4[view_growth_rate\n1.56%]
+        B5[churn_flag\nfalse]
+        B6[views_per_video\n100,000]
+        B7[subs_per_video\n2,000]
+        B8[new_video_count\n3]
+        B9[channel_age_days\n6,000]
+        B10[avg_daily_views\n20,833]
+        B11[avg_daily_subs\n417]
+        B12[engagement_score\n312.5]
+        B13[potential_revenue\n$250,000]
+        B14[monetization_flag\ntrue]
+        B15[virality_score\n1.8]
     end
-    
+
+    %% Connections
     A1 --> T1
     A2 --> T1
     A3 --> T2
@@ -125,7 +127,7 @@ graph LR
     A6 --> T3
     A7 --> T3
     A8 --> T3
-    
+
     T1 --> B1
     T1 --> B2
     T2 --> B3
@@ -141,36 +143,15 @@ graph LR
     T4 --> B13
     T3 --> B14
     T2 --> B15
-    
-    style A1 fill:#e1f5fe
-    style A2 fill:#e1f5fe
-    style A3 fill:#e1f5fe
-    style A4 fill:#e1f5fe
-    style A5 fill:#e1f5fe
-    style A6 fill:#e1f5fe
-    style A7 fill:#e1f5fe
-    style A8 fill:#e1f5fe
-    
-    style T1 fill:#fff3e0
-    style T2 fill:#fff3e0
-    style T3 fill:#fff3e0
-    style T4 fill:#fff3e0
-    
-    style B1 fill:#e8f5e8
-    style B2 fill:#e8f5e8
-    style B3 fill:#e8f5e8
-    style B4 fill:#e8f5e8
-    style B5 fill:#e8f5e8
-    style B6 fill:#e8f5e8
-    style B7 fill:#e8f5e8
-    style B8 fill:#e8f5e8
-    style B9 fill:#e8f5e8
-    style B10 fill:#e8f5e8
-    style B11 fill:#e8f5e8
-    style B12 fill:#e8f5e8
-    style B13 fill:#e8f5e8
-    style B14 fill:#e8f5e8
-    style B15 fill:#e8f5e8
+
+    %% Styling for better visibility in dark theme
+    classDef input fill:#d0ebff,stroke:#1c7ed6,color:#000;
+    classDef engine fill:#fff3bf,stroke:#e67700,color:#000;
+    classDef output fill:#d3f9d8,stroke:#37b24d,color:#000;
+
+    class A1,A2,A3,A4,A5,A6,A7,A8 input
+    class T1,T2,T3,T4 engine
+    class B1,B2,B3,B4,B5,B6,B7,B8,B9,B10,B11,B12,B13,B14,B15 output
 ```
 
 ### Business Impact
