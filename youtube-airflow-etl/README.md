@@ -216,17 +216,6 @@ docker compose up -d
 - **Current batch size**: The pipeline processes channels in batches (configurable via the BATCH_SIZE variable) rather than all at once. Batching is used to efficiently manage API quota limits, and ensure that the daily quota is not exceeded. By processing a set number of channels per batch, the pipeline can maximize throughput while minimizing the risk of failed requests due to quota exhaustion. This approach also allows for better error handling and retry logic, as failures in one batch do not affect the processing of others.
 - **Quota usage**: ~2 units per channel per day (channel endpoint only)
 
-## Features
-
-### Implemented
-- **Daily channel KPI tracking** with time-series analytics
-- **Rich business KPIs**: growth, churn, engagement, monetization, virality
-- **Batch processing** of up to 500 channels per run
-- **Robust error handling** - each channel processed independently
-- **Automatic table creation** with proper schema
-- **Historical data preservation** for trend analysis
-- **SaaS/product-analytics-ready** data model
-
 ## Testing
 
 To run the test suite, ensure dependencies are installed and run:
