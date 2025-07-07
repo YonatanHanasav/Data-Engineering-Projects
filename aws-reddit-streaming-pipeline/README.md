@@ -88,6 +88,14 @@ The pipeline collects Reddit posts in JSON Lines format. Here's a sample of the 
 | `link_flair_text` | string | Post flair text |
 | `domain` | string | Source domain |
 
-## Sample Dashboard
+## QuickSight Dashboard
+ The dashboard visualizes post activity, engagement, and content trends across dozens of subreddits.
 
-![quicksight](quicksight/dashboard_screenshot.png)
+**Sample Dashboard:**
+![Total Comments and Average Score by Fetch time](images/Total Comments and Average Score by Fetch time.png)
+*Total Comments and Average Score by Fetch time — QuickSight dashboard*
+
+**Key Features:**
+- Visualizes total comments and average score by fetch time
+- Shows posting and engagement spikes by hour and day
+- Highlights the most active and engaging subreddits
