@@ -92,7 +92,7 @@ The pipeline collects Reddit posts in JSON Lines format. Here's a sample of the 
  The dashboard visualizes post activity, engagement, and content trends across dozens of subreddits.
 
 **Sample Dashboard:**
-![Total Comments and Average Score by Fetch time](images/Total Comments and Average Score by Fetch time.png)
+![Total Comments and Average Score by Fetch time](images/Total_Comments_and_Average_Score_by_Fetch_time.png)
 *Total Comments and Average Score by Fetch time — QuickSight dashboard*
 
 **Key Features:**
