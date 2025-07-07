@@ -19,7 +19,7 @@ Here are a few more data projects that showcase my skills in analytics, dashboar
 Capstone project for the Google Data Analytics course, analyzing the Cyclistic Bikes dataset. Highlights Data wrangling, business insights, and interactive visualizations using python and Tableau.
 
 ### [YouTube Channels Analysis](https://public.tableau.com/app/profile/yonatan3121/viz/YoutubeAnalysis_16773441042500/Dashboard)
-Scraped and analyzed the top 1000 YouTube channels using Python. Focused on dashboarding and data storytelling with Tableau.End-to-end data pipeline, web scraping, and interactive analytics using python and Tableau.
+Scraped and analyzed the top 1000 YouTube channels using Python. Focused on dashboarding and data storytelling with Tableau. End-to-end data pipeline, web scraping, and interactive analytics using python and Tableau.
 
 ### [Running Data Project](https://public.tableau.com/app/profile/yonatan3121/viz/RunningDataProject/Dashboard)
-- **Description:** Personal project tracking 10 years of running sessions. Built a dynamic dashboard to visualize and analyze running progress.
+Personal project tracking 10 years of running sessions. Built a dynamic dashboard to visualize and analyze running progress.
