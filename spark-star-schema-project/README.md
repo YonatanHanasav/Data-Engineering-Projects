@@ -58,29 +58,36 @@ graph TD
 ## Star Schema Model
 ```mermaid
 graph TD
-  DIM_PRODUCT((Product Dimension))
-  DIM_USER((User Dimension))
-  DIM_DATE((Date Dimension))
-  DIM_AISLE((Aisle Dimension))
-  DIM_DEPARTMENT((Department Dimension))
-  
-  FACT_ORDER_PRODUCTS((Fact Order Products))
-  
-  FACT_ORDER_PRODUCTS -- product_id --> DIM_PRODUCT
-  FACT_ORDER_PRODUCTS -- user_id --> DIM_USER
-  FACT_ORDER_PRODUCTS -- date_id --> DIM_DATE
-  FACT_ORDER_PRODUCTS -- aisle_id --> DIM_AISLE
-  FACT_ORDER_PRODUCTS -- department_id --> DIM_DEPARTMENT
-  
-  DIM_PRODUCT -- aisle_id --> DIM_AISLE
-  DIM_PRODUCT -- department_id --> DIM_DEPARTMENT
+    subgraph Top
+        DIM_DATE["Date Dimension"]
+    end
+    subgraph Left
+        DIM_USER["User Dimension"]
+    end
+    subgraph Right
+        DIM_PRODUCT["Product Dimension"]
+    end
+    subgraph BottomLeft
+        DIM_AISLE["Aisle Dimension"]
+    end
+    subgraph BottomRight
+        DIM_DEPARTMENT["Department Dimension"]
+    end
 
-  style FACT_ORDER_PRODUCTS fill:#ffd700,stroke:#333,stroke-width:2px
-  style DIM_PRODUCT fill:#b3e6ff,stroke:#333,stroke-width:1px
-  style DIM_USER fill:#b3e6ff,stroke:#333,stroke-width:1px
-  style DIM_DATE fill:#b3e6ff,stroke:#333,stroke-width:1px
-  style DIM_AISLE fill:#b3e6ff,stroke:#333,stroke-width:1px
-  style DIM_DEPARTMENT fill:#b3e6ff,stroke:#333,stroke-width:1px
+    FACT["Fact Order Products"]
+
+    FACT --- DIM_DATE
+    FACT --- DIM_USER
+    FACT --- DIM_PRODUCT
+    FACT --- DIM_AISLE
+    FACT --- DIM_DEPARTMENT
+
+    style FACT fill:#003366,stroke:#003366,stroke-width:2px,color:#fff,font-weight:bold
+    style DIM_DATE fill:#000,stroke:#000,stroke-width:1px,color:#fff
+    style DIM_USER fill:#000,stroke:#000,stroke-width:1px,color:#fff
+    style DIM_PRODUCT fill:#000,stroke:#000,stroke-width:1px,color:#fff
+    style DIM_AISLE fill:#000,stroke:#000,stroke-width:1px,color:#fff
+    style DIM_DEPARTMENT fill:#000,stroke:#000,stroke-width:1px,color:#fff
 ```
 
 ## Why Spark, Star Schema, and a Data Lake?
