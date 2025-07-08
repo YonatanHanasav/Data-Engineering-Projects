@@ -48,7 +48,7 @@ spark-star-schema-project/
 
 ## Architecture & Data Flow
 ```mermaid
-graph TD
+graph LR
     A[Instacart CSVs] --> B[PySpark ETL]
     B --> C[Star Schema Modeling]
     C --> D[Parquet Files]
@@ -91,8 +91,9 @@ With over half a gigabyte in a single file and millions of records, traditional 
 Storing the processed data in a **star schema** (fact and dimension tables) makes analytics fast and flexible, supporting a wide range of business intelligence queries. Saving the results as **Parquet files** in a cloud data lake (GCS) provides scalable, cost-effective storage and enables downstream analytics with Spark, BigQuery, or other tools.
 
 ## Analysis & Performance Optimization
-
-The analysis notebook demonstrates how the star schema enables efficient, expressive analytics. To further optimize performance on large joins and aggregations, I used **Spark's `repartition()`** method before groupBy operations. This repartitioning step ensures that Spark distributes the data more evenly across partitions, reducing data shuffling and improving parallelism. As a result, queries run significantly faster, even on a single machine or limited cloud resources.
+[View the analysis notebook with example queries and visualizations.](notebooks/star_schema_analysis.ipynb)
+The analysis notebook demonstrates how the star schema enables efficient, expressive analytics. 
+To further optimize performance on large joins and aggregations, I used **Spark's `repartition()`** method before groupBy operations. This repartitioning step ensures that Spark distributes the data more evenly across partitions, reducing data shuffling and improving parallelism. As a result, queries run significantly faster, even on a single machine or limited cloud resources.
 
 ## Quick Start
 
