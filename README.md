@@ -11,7 +11,7 @@ Hourly Reddit ingestion pipeline using AWS (Lambda, S3, EventBridge, Glue, Athen
 Daily ETL pipeline using Airflow + PostgreSQL, ingesting data from the YouTube Data API.
 
 ### <a href="#"><img src="https://github.com/devicons/devicon/blob/v2.16.0/icons/apachespark/apachespark-original.svg" alt="Spark" width="28"/></a> [Spark Star Schema Project](./spark-star-schema-project)
-Big data pipeline using PySpark, star schema modeling, and Google Cloud Storage as a data lake. Processes Instacart Market Basket kaggle's dataset, builds a star schema and enables fast analytics with Parquet files and Jupyter notebooks.
+Big data pipeline using PySpark, star schema modeling, and Google Cloud Storage as a data lake.
 
 ## Other Data Projects
 
