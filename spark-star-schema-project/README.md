@@ -11,8 +11,7 @@ This project demonstrates a real-world data engineering pipeline using PySpark, 
 - **Service Account Auth**: Secure cloud access
 
 ## Data Source
-- **Instacart Market Basket Analysis** ([Kaggle link](https://www.kaggle.com/datasets/
-psparks/instacart-market-basket-analysis))
+- **Instacart Market Basket Analysis** ([Kaggle link](https://www.kaggle.com/datasets/psparks/instacart-market-basket-analysis))
 - Contains millions of real grocery orders, products, aisles, departments, and users
 
 ## Key Features
@@ -24,12 +23,14 @@ psparks/instacart-market-basket-analysis))
 ```
 spark-star-schema-project/
   scripts/           # Python scripts for ETL, enrichment, date synthesis, etc.
-  datalake/
-    raw/             # Raw data (Instacart CSVs)
-    processed/       # Processed data (enriched CSVs, ready for GCS)
-  notebooks/         # (Optional) Jupyter notebooks for exploration
+  notebooks/         # Jupyter notebooks for exploration and analysis
   README.md
   requirements.txt
+  .gitignore
+  # The following are ignored by git:
+  # datalake/        # Raw and processed data (see .gitignore)
+  # notebooks/artifacts/ # Notebook-generated artifacts (see .gitignore)
+```
 
 ## Scripts & Components
 
@@ -57,20 +58,29 @@ graph TD
 ## Star Schema Model
 ```mermaid
 graph TD
-  FACT_ORDER_PRODUCTS((Fact Order Products))
   DIM_PRODUCT((Product Dimension))
   DIM_USER((User Dimension))
   DIM_DATE((Date Dimension))
   DIM_AISLE((Aisle Dimension))
   DIM_DEPARTMENT((Department Dimension))
-
+  
+  FACT_ORDER_PRODUCTS((Fact Order Products))
+  
   FACT_ORDER_PRODUCTS -- product_id --> DIM_PRODUCT
   FACT_ORDER_PRODUCTS -- user_id --> DIM_USER
   FACT_ORDER_PRODUCTS -- date_id --> DIM_DATE
   FACT_ORDER_PRODUCTS -- aisle_id --> DIM_AISLE
   FACT_ORDER_PRODUCTS -- department_id --> DIM_DEPARTMENT
+  
   DIM_PRODUCT -- aisle_id --> DIM_AISLE
   DIM_PRODUCT -- department_id --> DIM_DEPARTMENT
+
+  style FACT_ORDER_PRODUCTS fill:#ffd700,stroke:#333,stroke-width:2px
+  style DIM_PRODUCT fill:#b3e6ff,stroke:#333,stroke-width:1px
+  style DIM_USER fill:#b3e6ff,stroke:#333,stroke-width:1px
+  style DIM_DATE fill:#b3e6ff,stroke:#333,stroke-width:1px
+  style DIM_AISLE fill:#b3e6ff,stroke:#333,stroke-width:1px
+  style DIM_DEPARTMENT fill:#b3e6ff,stroke:#333,stroke-width:1px
 ```
 
 ## Why Spark, Star Schema, and a Data Lake?
