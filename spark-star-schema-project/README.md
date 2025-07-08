@@ -1,17 +1,13 @@
 # Spark Star Schema Pipeline
 
 ## Overview
-This project demonstrates a real-world data engineering pipeline using PySpark, a star schema data model, and Google Cloud Storage (GCS) as a data lake. The pipeline uses the Instacart Market Basket Analysis dataset from Kaggle, synthesizes a realistic date dimension, enriches all dimensions and the fact table, and stores the results as Parquet files in GCS.
+This project demonstrates a real world data engineering pipeline using PySpark, a star schema data model and Google Cloud Storage (GCS) as a data lake. The pipeline uses the Instacart Market Basket dataset from Kaggle, synthesizes a realistic date dimension, enriches all dimensions with additional attributes and the fact table, and stores the results as Parquet files in GCS.
 
 ## Tech Stack
 - **PySpark**: Distributed ETL and data modeling
-- **Google Cloud Storage (GCS)**: Data lake (free tier)
+- **Google Cloud Storage**: Data lake (free tier)
 - **Python 3.9**, **Java 17**
 - **Parquet**: Columnar storage format
-- **Service Account Auth**: Secure cloud access
-
-## Data Source
-- **Instacart Market Basket Analysis** ([Kaggle link](https://www.kaggle.com/datasets/psparks/instacart-market-basket-analysis))- it contains millions of real grocery orders, products, aisles, departments, and users
 
 ## Key Features
 - **Cloud-native:** Writes analytics-ready Parquet files to Google Cloud Storage
@@ -31,16 +27,19 @@ spark-star-schema-project/
   # notebooks/artifacts/ # Notebook-generated artifacts (see .gitignore)
 ```
 
+## Data Source
+- ([Instacart Market Basket Analysis](https://www.kaggle.com/datasets/psparks/instacart-market-basket-analysis))- contains millions of real grocery orders, products, aisles, departments and users.
+
 ## Scripts & Components
 
 - **scripts/synthesize_date_dimension.py**  
   Synthesizes a realistic date dimension table from Instacart order data, assigning order dates and generating date attributes (year, month, weekday, etc.).
 
 - **scripts/enrich_dimensions_and_fact.py**  
-  Enriches all dimension tables (product, aisle, department, user, date) and the fact table. Adds synthetic features (e.g., unit price, sales amount), aggregates, and joins, outputting processed CSVs for ETL.
+  Enriches all dimension tables (product, aisle, department, user, date) and the fact table. Adds synthetic features (like unit price, sales amount), aggregates and joins,outputting processed CSVs for ETL.
 
 - **scripts/spark_etl_to_gcs.py**  
-  Main ETL pipeline. Reads processed CSVs, validates schemas, transforms data into a star schema, and writes each table as Parquet files to Google Cloud Storage using PySpark.
+  Main ETL pipeline. Reads processed CSVs, validates schemas, transforms data into a star schema and writes each table as Parquet files to Google Cloud Storage using PySpark.
 
 - **jars/gcs-connector-hadoop3-latest.jar**  
   Google Cloud Storage connector JAR for Hadoop/Spark. Enables PySpark to read from and write to GCS buckets securely and efficiently.
@@ -79,18 +78,18 @@ graph LR
     style DIM_DEPARTMENT fill:#000,stroke:#000,stroke-width:1px,color:#fff
 ```
 
-## Why Spark, Star Schema, and a Data Lake?
+## Why Spark, Star Schema and Data Lake?
 
 The Instacart dataset consists of several large CSV files, including:
 - `order_products.csv`: **600 MB after concatenation**
 - `orders.csv`: **150 MB after adding dates**
 
-With over half a gigabyte in a single file and millions of records, traditional pandas or single-machine workflows become slow and memory-intensive. Using **PySpark** enables distributed processing, allowing the pipeline to efficiently handle, transform, and join these large datasets. 
+With over half a gigabyte in a single file and millions of records, traditional pandas or single-machine workflows become slow and memory-intensive. Using **PySpark** enables distributed processing, allowing the pipeline to efficiently handle, transform and join these large datasets. 
 
 Storing the processed data in a **star schema** (fact and dimension tables) makes analytics fast and flexible, supporting a wide range of business intelligence queries. Saving the results as **Parquet files** in a cloud data lake (GCS) provides scalable, cost-effective storage and enables downstream analytics with Spark, BigQuery, or other tools.
 
 ## Analysis & Performance Optimization
-[View the analysis notebook with example queries and visualizations.](notebooks/star_schema_analysis.ipynb)
+[Analysis notebook with queries and visualizations](notebooks/star_schema_analysis.ipynb)
 
 The analysis notebook demonstrates how the star schema enables efficient, expressive analytics.
 
