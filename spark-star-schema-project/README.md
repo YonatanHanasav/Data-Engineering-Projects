@@ -1,16 +1,16 @@
 # Spark Star Schema Pipeline
 
 ## Overview
-This project demonstrates a real world data engineering pipeline using PySpark, a star schema data model and Google Cloud Storage (GCS) as a data lake. The pipeline uses the Instacart Market Basket dataset from Kaggle, synthesizes a realistic date dimension, enriches all dimensions with additional attributes and the fact table, and stores the results as Parquet files in GCS.
+This project demonstrates a real world data engineering pipeline using PySpark, a star schema data model and Google Cloud Storage (GCS) as a data lake. The pipeline uses the Instacart Market Basket dataset from Kaggle, synthesizes a realistic date dimension, enriches all dimensions with additional attributes and the fact table and stores the results as Parquet files in GCS.
 
 ## Tech Stack
 - **PySpark**: Distributed ETL and data modeling
-- **Google Cloud Storage**: Data lake (free tier)
+- **Google Cloud Storage**: Data lake
 - **Python 3.9**, **Java 17**
 - **Parquet**: Columnar storage format
 
 ## Key Features
-- **Cloud-native:** Writes analytics-ready Parquet files to Google Cloud Storage
+- **Cloud-native:** Writes analytics ready Parquet files to Google Cloud Storage
 - **Scalable:** Handles millions of records with Spark
 - **Big Data Modeling:** Star schema, partitioned data
 
