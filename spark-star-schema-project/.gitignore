@@ -1,0 +1,27 @@
+# Ignore the datalake folder (raw and processed data)
+datalake/
+
+# Ignore notebook artifacts
+notebooks/artifacts/
+
+# Python virtual environments
+venv/
+
+# Jupyter notebook checkpoints
+.ipynb_checkpoints/
+
+# Mac system files
+.DS_Store
+
+# PyCharm/VSCode/IDEA project files
+.idea/
+.vscode/
+
+# Compiled Python files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Logs
+*.log 

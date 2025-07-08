@@ -1,0 +1,9 @@
+pyspark
+pandas
+requests
+google-cloud-storage
+jupyter
+matplotlib
+numpy
+notebook
+ipykernel
