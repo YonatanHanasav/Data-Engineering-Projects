@@ -28,7 +28,7 @@ spark-star-schema-project/
 ```
 
 ## Data Source
-- ([Instacart Market Basket Analysis](https://www.kaggle.com/datasets/psparks/instacart-market-basket-analysis))- contains millions of real grocery orders, products, aisles, departments and users.
+[Instacart Market Basket Analysis](https://www.kaggle.com/datasets/psparks/instacart-market-basket-analysis)- contains millions of real grocery orders, products, aisles, departments and users.
 
 ## Scripts & Components
 
