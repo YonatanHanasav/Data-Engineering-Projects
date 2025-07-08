@@ -57,22 +57,12 @@ graph TD
 
 ## Star Schema Model
 ```mermaid
-graph TD
-    subgraph Top
-        DIM_DATE["Date Dimension"]
-    end
-    subgraph Left
-        DIM_USER["User Dimension"]
-    end
-    subgraph Right
-        DIM_PRODUCT["Product Dimension"]
-    end
-    subgraph BottomLeft
-        DIM_AISLE["Aisle Dimension"]
-    end
-    subgraph BottomRight
-        DIM_DEPARTMENT["Department Dimension"]
-    end
+graph LR
+    DIM_DATE["Date Dimension"]
+    DIM_USER["User Dimension"]
+    DIM_PRODUCT["Product Dimension"]
+    DIM_AISLE["Aisle Dimension"]
+    DIM_DEPARTMENT["Department Dimension"]
 
     FACT["Fact Order Products"]
 
