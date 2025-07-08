@@ -11,8 +11,7 @@ This project demonstrates a real-world data engineering pipeline using PySpark, 
 - **Service Account Auth**: Secure cloud access
 
 ## Data Source
-- **Instacart Market Basket Analysis** ([Kaggle link](https://www.kaggle.com/datasets/psparks/instacart-market-basket-analysis))
-- Contains millions of real grocery orders, products, aisles, departments, and users
+- **Instacart Market Basket Analysis** ([Kaggle link](https://www.kaggle.com/datasets/psparks/instacart-market-basket-analysis))- it contains millions of real grocery orders, products, aisles, departments, and users
 
 ## Key Features
 - **Cloud-native:** Writes analytics-ready Parquet files to Google Cloud Storage
@@ -92,7 +91,9 @@ Storing the processed data in a **star schema** (fact and dimension tables) make
 
 ## Analysis & Performance Optimization
 [View the analysis notebook with example queries and visualizations.](notebooks/star_schema_analysis.ipynb)
-The analysis notebook demonstrates how the star schema enables efficient, expressive analytics. 
+
+The analysis notebook demonstrates how the star schema enables efficient, expressive analytics.
+
 To further optimize performance on large joins and aggregations, I used **Spark's `repartition()`** method before groupBy operations. This repartitioning step ensures that Spark distributes the data more evenly across partitions, reducing data shuffling and improving parallelism. As a result, queries run significantly faster, even on a single machine or limited cloud resources.
 
 ## Quick Start
