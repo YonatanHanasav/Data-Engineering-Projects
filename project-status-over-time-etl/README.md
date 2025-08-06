@@ -2,101 +2,10 @@
 
 This repository contains an ETL pipeline that transforms project milestone data into a daily project status table, suitable for time-series analytics in BI tools like Tableau. It leverages PostgreSQL for storage and transformation, Python for orchestration, and Docker for environment consistency.
 
----
-
 ## Overview
 
 Typical project databases track only milestone dates like `initial_date`, `active_date`, and `end_date`. These do not provide visibility into the project's status on any given day.
-
 This ETL generates a **daily-grain fact table** where each row reflects a project's status (`initial`, `active`, or `completed`) on a specific date. This structure enables precise trend analyses and timeline visualizations.
-
----
-
-## Use Cases
-
-- Visualizing project status over time in Tableau or Power BI
-- Comparing durations across projects or teams
-- Tracking active projects on any day
-- Supporting operational and performance dashboards
-
----
-
-## Project Logic Rules
-
-- `store_date` is always populated
-- `initial_date` can be null
-- `active_date` must be after `initial_date` (if present), and can be null
-- `end_date` must be after `active_date` (if present), and can be null
-
-### Dependencies Between Dates:
-
-| Condition | Requirements |
-|----------|--------------|
-| `end_date` is present | `initial_date` and `active_date` must also be present |
-| `active_date` is present | `initial_date` must also be present |
-| Only `initial_date` is present | `active_date` and `end_date` can be null |
-
----
-
-## Input Schema (`projects` table)
-
-| Column        | Type    | Description                                      |
-|---------------|---------|--------------------------------------------------|
-| project_id    | UUID    | Unique identifier                                |
-| store_date    | DATE    | When the record was stored in the database       |
-| initial_date  | DATE    | When the project was first created               |
-| active_date   | DATE    | When the project moved into execution            |
-| end_date      | DATE    | When the project was completed                   |
-| project_name  | TEXT    | Synthetic name for the project                   |
-| owner         | TEXT    | Department responsible for the project           |
-| region        | TEXT    | Region of operation                              |
-| budget        | NUMERIC | Budget amount in USD                             |
-
----
-
-## Output Schema (`daily_project_status` table)
-
-| Column       | Type    | Description                              |
-|--------------|---------|------------------------------------------|
-| project_id   | UUID    | Project identifier                       |
-| project_date | DATE    | Specific date between start and end      |
-| status       | TEXT    | One of: `initial`, `active`, `completed` |
-
----
-
-## Status Assignment Logic
-
-For each date in the range between start and end:
-
-- If `active_date` is not null and `date` < `active_date` → `initial`
-- If `active_date` is not null and `active_date` ≤ `date` < `end_date` → `active`
-- If `end_date` is not null and `date` = `end_date` → `completed`
-- Fallback → `initial`
-
----
-
-## Estimated End Dates
-
-If `end_date` is missing:
-- Use the latest available milestone (`initial_date`, `active_date`, or `store_date`)
-- Add the **average project duration** (calculated from completed projects)
-- Add a buffer of 15 days
-
----
-
-## Audit Table (`etl_audit`)
-
-The pipeline logs every run in an audit table:
-
-| Column       | Type      | Description                       |
-|--------------|-----------|-----------------------------------|
-| run_id       | UUID      | Unique ID per ETL run             |
-| script_name  | TEXT      | The Python or SQL script executed |
-| status       | TEXT      | `success` or `failure`            |
-| run_time     | TIMESTAMP | When the script was executed      |
-| message      | TEXT      | Additional notes or errors        |
-
----
 
 ## ETL Architecture
 
@@ -135,11 +44,54 @@ flowchart TD
         L
     end
 
-    ## Live Tableau Dashboard
+## Input Schema (`projects` table)
 
-[Click here to view the interactive Tableau Dashboard](https://public.tableau.com/app/profile/yonatan3121/viz/project-status-etl/Dashboard?publish=yes)
+| Column        | Type    | Description                                      |
+|---------------|---------|--------------------------------------------------|
+| project_id    | UUID    | Unique identifier                                |
+| store_date    | DATE    | When the record was stored in the database       |
+| initial_date  | DATE    | When the project was first created               |
+| active_date   | DATE    | When the project moved into execution            |
+| end_date      | DATE    | When the project was completed                   |
+| project_name  | TEXT    | Synthetic name for the project                   |
+| owner         | TEXT    | Department responsible for the project           |
+| region        | TEXT    | Region of operation                              |
+| budget        | NUMERIC | Budget amount in USD                             |
 
-If you're embedding this dashboard on a website or documentation system that supports HTML:
+## Output Schema (`daily_project_status` table)
 
-```html
-<iframe src="https://public.tableau.com/views/project-status-etl/Dashboard?:language=en-US&:display_count=n&:origin=viz_share_link" width="100%" height="700px"></iframe>
+| Column       | Type    | Description                              |
+|--------------|---------|------------------------------------------|
+| project_id   | UUID    | Project identifier                       |
+| project_date | DATE    | Specific date between start and end      |
+| status       | TEXT    | One of: `initial`, `active`, `completed` |
+
+## Status Assignment Logic
+
+For each date in the range between start and end:
+
+- If `active_date` is not null and `date` < `active_date` → `initial`
+- If `active_date` is not null and `active_date` ≤ `date` < `end_date` → `active`
+- If `end_date` is not null and `date` = `end_date` → `completed`
+- Fallback → `initial`
+
+If `end_date` is missing:
+- Use the latest available milestone (`initial_date`, `active_date`, or `store_date`)
+- Add the **average project duration** (calculated from completed projects)
+- Add a buffer of 15 days
+
+## Audit Table (`etl_audit`)
+
+The pipeline logs every run in an audit table:
+
+| Column       | Type      | Description                       |
+|--------------|-----------|-----------------------------------|
+| run_id       | UUID      | Unique ID per ETL run             |
+| script_name  | TEXT      | The Python or SQL script executed |
+| status       | TEXT      | `success` or `failure`            |
+| run_time     | TIMESTAMP | When the script was executed      |
+| message      | TEXT      | Additional notes or errors        |
+
+## Live Tableau Dashboard
+
+[Click here to view the interactive dashboard](https://public.tableau.com/app/profile/yonatan3121/viz/project-status-etl/Dashboard?publish=yes)    
