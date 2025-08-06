@@ -43,6 +43,7 @@ flowchart TD
         E
         L
     end
+```
 
 ## Input Schema (`projects` table)
 
