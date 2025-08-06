@@ -1,0 +1,37 @@
+# Environment Variables
+.env
+
+# Python Bytecode
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual Environment
+.venv/
+env/
+venv/
+ENV/
+
+# Data and CSV outputs
+*.csv
+data_output/
+output/
+*.sqlite
+
+# Logs
+*.log
+
+# Jupyter Notebooks Checkpoints
+.ipynb_checkpoints
+
+# macOS system files
+.DS_Store
+
+# VSCode settings
+.vscode/
+
+# PyCharm settings
+.idea/
+
+# Docker
+**/pgdata/

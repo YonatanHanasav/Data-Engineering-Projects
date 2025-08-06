@@ -102,29 +102,44 @@ The pipeline logs every run in an audit table:
 
 ```mermaid
 flowchart TD
-    subgraph Source
-        A[projects table<br>PostgreSQL] 
-    end
+    %% Nodes
+    A[(projects table<br>PostgreSQL)] 
+    B[Extract Data<br>populate_projects.py]
+    C[Transform Data<br>transform_projects_to_daily_status.sql]
+    D[Load Result<br>Insert into daily_project_status]
+    E[(daily_project_status<br>PostgreSQL table)]
+    F[Tableau Dashboard]
+    L[(audit table<br>etl_audit)]
 
-    subgraph ETL Pipeline [ETL Pipeline - SQL + Python + Docker]
+    %% Connections with labels
+    A -->|Extract Data| B
+    B -->|Transform Data| C
+    C -->|Load Data| D
+    D -->|Write to Table| E
+    E -->|Read into Dashboard| F
+    C -->|Write to Audit| L
+
+    %% ETL group - triangle layout, spaced to prevent label overlap
+    subgraph ETL_Pipeline [ETL Pipeline]
         direction TB
-        B[Extract Data<br>populate_projects.py]
-        C[Transform Data<br>transform_projects_to_daily_status.sql]
-        D[Load Result<br>Insert into daily_project_status]
+        B
+        C
+        D
     end
 
-    subgraph Destination
-        E[daily_project_status<br>PostgreSQL table]
+    %% Docker-managed services
+    subgraph Docker [Docker Environment]
+        direction LR
+        A
+        E
+        L
     end
 
-    subgraph BI Layer
-        F[Tableau Dashboard]
-    end
+    ## Live Tableau Dashboard
 
-    subgraph Logs
-        L[audit table<br>etl_audit]
-    end
+[Click here to view the interactive Tableau Dashboard](https://public.tableau.com/app/profile/yonatan3121/viz/project-status-etl/Dashboard?publish=yes)
 
-    A --> B --> C --> D --> E --> F
-    C --> L
-    D --> L
+If you're embedding this dashboard on a website or documentation system that supports HTML:
+
+```html
+<iframe src="https://public.tableau.com/views/project-status-etl/Dashboard?:language=en-US&:display_count=n&:origin=viz_share_link" width="100%" height="700px"></iframe>
