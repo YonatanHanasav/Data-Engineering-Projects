@@ -137,18 +137,6 @@ This approach ensures:
 - Logical fallback when dates are missing
 - Clean status transitions for time-series dashboards
 
-## Audit Table (`etl_audit`)
-
-The pipeline logs every run in an audit table:
-
-| Column       | Type      | Description                       |
-|--------------|-----------|-----------------------------------|
-| run_id       | UUID      | Unique ID per ETL run             |
-| script_name  | TEXT      | The Python or SQL script executed |
-| status       | TEXT      | `success` or `failure`            |
-| run_time     | TIMESTAMP | When the script was executed      |
-| message      | TEXT      | Additional notes or errors        |
-
 ## Live Tableau Dashboard
 
 [Click here to view the interactive dashboard](https://public.tableau.com/app/profile/yonatan3121/viz/project-status-etl/Dashboard?publish=yes)
