@@ -7,7 +7,7 @@ This repository contains an ETL pipeline that transforms project milestone data 
 Typical project databases track only milestone dates like `initial_date`, `active_date`, and `end_date`. These do not provide visibility into the project's status on any given day.
 This ETL generates a **daily-grain fact table** where each row reflects a project's status (`initial`, `active`, or `completed`) on a specific date. This structure enables precise trend analyses and timeline visualizations.
 
-## Sample Data: `projects` Table
+## Sample Data: `projects` Table (input)
 
 The table below shows representative rows from the `projects` table that reflect various milestone availability scenarios:
 
@@ -20,7 +20,7 @@ The table below shows representative rows from the `projects` table that reflect
 
 These samples are useful for testing and validating the logic implemented in the transformation SQL.
 
-## Output Schema (`daily_project_status` table)
+## Output Schema `daily_project_status` table (goal)
 
 | Column       | Type    | Description                              |
 |--------------|---------|------------------------------------------|
