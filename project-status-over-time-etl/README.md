@@ -67,19 +67,75 @@ flowchart TD
 | project_date | DATE    | Specific date between start and end      |
 | status       | TEXT    | One of: `initial`, `active`, `completed` |
 
-## Status Assignment Logic
+## Transformation Logic
 
-For each date in the range between start and end:
+To generate a daily project status table from milestone data, I implemented a 3-step SQL transformation process that ensures data completeness, accuracy, and resilience when milestone fields are missing.
 
-- If `active_date` is not null and `date` < `active_date` → `initial`
-- If `active_date` is not null and `active_date` ≤ `date` < `end_date` → `active`
-- If `end_date` is not null and `date` = `end_date` → `completed`
-- Fallback → `initial`
+### Step 1: Calculate Average Duration (from Completed Projects)
+To fill cases where there is no end date I will be estimating the duration of ongoing or incomplete projects by
+calculating the average duration in days across all projects that have both `initial_date` and `end_date`. 
 
-If `end_date` is missing:
-- Use the latest available milestone (`initial_date`, `active_date`, or `store_date`)
-- Add the **average project duration** (calculated from completed projects)
-- Add a buffer of 15 days
+```sql
+WITH avg_duration AS (
+    SELECT 
+        ROUND(AVG(end_date - initial_date))::INT AS avg_days
+    FROM projects
+    WHERE end_date IS NOT NULL
+      AND initial_date IS NOT NULL
+)
+```
+
+### Step 2: Determine Start and End Dates per Project
+Since the date values are not always filled, I calculate a reliable `start_date` and `end_date` for each project:
+- `start_date` is the earliest of: `initial_date`, `active_date`, or `store_date`.
+- `end_date` is:
+  - The real `end_date` (if available)
+  - When there is no end_date latest milestone + average duration + 15-day buffer
+
+```sql
+expanded_projects AS (
+    SELECT
+        p.project_id,
+        LEAST(p.initial_date, p.active_date, p.store_date) AS start_date,
+        COALESCE(
+            p.end_date,
+            GREATEST(p.initial_date, p.active_date, p.store_date) + (a.avg_days + 15)
+        ) AS estimated_end_date,
+        p.initial_date,
+        p.active_date,
+        p.end_date
+    FROM projects p
+    CROSS JOIN avg_duration a
+)
+```
+
+### Step 3: Expand into Daily Rows and Assign Status
+In order to expand each project into daily rows I will be using `generate_series` to generate a date backbone and assign a project status (`initial`, `active`, `completed`) based on the milestone dates.
+
+```sql
+INSERT INTO daily_project_status (project_id, project_date, status)
+SELECT
+    ep.project_id,
+    gs.day::date AS project_date,
+    CASE
+        WHEN ep.active_date IS NOT NULL AND gs.day < ep.active_date THEN 'initial'
+        WHEN ep.active_date IS NOT NULL AND gs.day >= ep.active_date 
+             AND gs.day < COALESCE(ep.end_date, ep.estimated_end_date) THEN 'active'
+        WHEN ep.end_date IS NOT NULL AND gs.day = ep.end_date THEN 'completed'
+        ELSE 'initial'
+    END AS status
+FROM expanded_projects ep
+JOIN LATERAL generate_series(
+    ep.start_date,
+    COALESCE(ep.end_date, ep.estimated_end_date),
+    interval '1 day'
+) AS gs(day) ON TRUE;
+```
+
+This approach ensures:
+- Daily visibility for each project
+- Logical fallback when dates are missing
+- Clean status transitions for time-series dashboards
 
 ## Audit Table (`etl_audit`)
 
