@@ -7,6 +7,9 @@ Each folder represents a standalone project with its own setup, tools, and docum
 ### <a href="#"><img src="https://github.com/devicons/devicon/blob/v2.16.0/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" alt="AWS" width="28"/></a> [AWS Reddit Streaming Pipeline](./aws-reddit-streaming-pipeline)
 Hourly Reddit ingestion pipeline using AWS (Lambda, S3, EventBridge, Glue, Athena and QuickSight).
 
+### <a href="https://public.tableau.com/app/profile/yonatan3121/viz/project-status-etl/Dashboard?publish=yes"><img src="https://logo.svgcdn.com/l/tableau-icon.svg" alt="Tableau" width="28"/></a> [Project Status Over Time ETL](./project-status-over-time-etl)
+ETL pipeline using Python, PostgreSQL, and Docker to transform project milestone data into a daily status table. Visualized using Tableau Public for time-series project tracking.
+
 ### <a href="#"><img src="https://github.com/devicons/devicon/blob/v2.16.0/icons/apacheairflow/apacheairflow-original.svg" alt="Airflow" width="28"/></a> [YouTube Airflow ETL](./youtube-airflow-etl)
 Daily ETL pipeline using Airflow + PostgreSQL, ingesting data from the YouTube Data API.
 

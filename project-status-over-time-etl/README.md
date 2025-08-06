@@ -95,4 +95,5 @@ The pipeline logs every run in an audit table:
 
 ## Live Tableau Dashboard
 
-[Click here to view the interactive dashboard](https://public.tableau.com/app/profile/yonatan3121/viz/project-status-etl/Dashboard?publish=yes)    
+[Click here to view the interactive dashboard](https://public.tableau.com/app/profile/yonatan3121/viz/project-status-etl/Dashboard?publish=yes)
+_Note: This link opens in the same tab. Right-click and choose "Open in new tab" for best experience._    
