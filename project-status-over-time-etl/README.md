@@ -7,57 +7,18 @@ This repository contains an ETL pipeline that transforms project milestone data 
 Typical project databases track only milestone dates like `initial_date`, `active_date`, and `end_date`. These do not provide visibility into the project's status on any given day.
 This ETL generates a **daily-grain fact table** where each row reflects a project's status (`initial`, `active`, or `completed`) on a specific date. This structure enables precise trend analyses and timeline visualizations.
 
-## ETL Architecture
+## Sample Data: `projects` Table
 
-```mermaid
-flowchart TD
-    %% Nodes
-    A[(projects table<br>PostgreSQL)] 
-    B[Extract Data<br>populate_projects.py]
-    C[Transform Data<br>transform_projects_to_daily_status.sql]
-    D[Load Result<br>Insert into daily_project_status]
-    E[(daily_project_status<br>PostgreSQL table)]
-    F[Tableau Dashboard]
-    L[(audit table<br>etl_audit)]
+The table below shows representative rows from the `projects` table that reflect various milestone availability scenarios:
 
-    %% Connections with labels
-    A -->|Extract Data| B
-    B -->|Transform Data| C
-    C -->|Load Data| D
-    D -->|Write to Table| E
-    E -->|Read into Dashboard| F
-    C -->|Write to Audit| L
+| project_id | store_date  | initial_date | active_date | end_date    | project_name    | owner    | region   | budget   |
+|------------|-------------|--------------|-------------|-------------|------------------|----------|----------|----------|
+| 001        | 2024-01-01  | 2024-01-01   | 2024-01-05  | 2024-02-01  | Apollo Expansion | Ops      | NA       | 100000   |
+| 002        | 2024-01-10  | 2024-01-10   | 2024-01-15  | *(null)*    | Gemini Launch    | Finance  | EU       | 150000   |
+| 003        | 2024-02-01  | 2024-02-01   | *(null)*    | *(null)*    | Orion Upgrade    | IT       | APAC     | 80000    |
+| 004        | 2024-03-01  | *(null)*     | *(null)*    | *(null)*    | Nova Initiative  | R&D      | Global   | 120000   |
 
-    %% ETL group - triangle layout, spaced to prevent label overlap
-    subgraph ETL_Pipeline [ETL Pipeline]
-        direction TB
-        B
-        C
-        D
-    end
-
-    %% Docker-managed services
-    subgraph Docker [Docker Environment]
-        direction LR
-        A
-        E
-        L
-    end
-```
-
-## Input Schema (`projects` table)
-
-| Column        | Type    | Description                                      |
-|---------------|---------|--------------------------------------------------|
-| project_id    | UUID    | Unique identifier                                |
-| store_date    | DATE    | When the record was stored in the database       |
-| initial_date  | DATE    | When the project was first created               |
-| active_date   | DATE    | When the project moved into execution            |
-| end_date      | DATE    | When the project was completed                   |
-| project_name  | TEXT    | Synthetic name for the project                   |
-| owner         | TEXT    | Department responsible for the project           |
-| region        | TEXT    | Region of operation                              |
-| budget        | NUMERIC | Budget amount in USD                             |
+These samples are useful for testing and validating the logic implemented in the transformation SQL.
 
 ## Output Schema (`daily_project_status` table)
 
@@ -67,7 +28,7 @@ flowchart TD
 | project_date | DATE    | Specific date between start and end      |
 | status       | TEXT    | One of: `initial`, `active`, `completed` |
 
-## Transformation Logic
+## Transformation Logic - SQL Backbone: From Milestones to Daily Status
 
 To generate a daily project status table from milestone data, I implemented a 3-step SQL transformation process that ensures data completeness, accuracy, and resilience when milestone fields are missing.
 
@@ -136,6 +97,52 @@ This approach ensures:
 - Daily visibility for each project
 - Logical fallback when dates are missing
 - Clean status transitions for time-series dashboards
+
+### Interpretation Examples
+Based on the transformation logic above, here's how the logic applies to the sample data:
+
+- **Row 1:** Fully completed project → uses real `end_date`
+- **Row 2:** Project with no `end_date` yet → uses estimated end
+- **Row 3:** Only `initial_date` is known → uses fallback logic
+- **Row 4:** No milestone dates → uses `store_date` for estimation
+
+## ETL Architecture
+
+```mermaid
+flowchart TD
+    %% Nodes
+    A[(projects table<br>PostgreSQL)] 
+    B[Extract Data<br>populate_projects.py]
+    C[Transform Data<br>transform_projects_to_daily_status.sql]
+    D[Load Result<br>Insert into daily_project_status]
+    E[(daily_project_status<br>PostgreSQL table)]
+    F[Tableau Dashboard]
+    L[(audit table<br>etl_audit)]
+
+    %% Connections with labels
+    A -->|Extract Data| B
+    B -->|Transform Data| C
+    C -->|Load Data| D
+    D -->|Write to Table| E
+    E -->|Read into Dashboard| F
+    C -->|Write to Audit| L
+
+    %% ETL group - triangle layout, spaced to prevent label overlap
+    subgraph ETL_Pipeline [ETL Pipeline]
+        direction TB
+        B
+        C
+        D
+    end
+
+    %% Docker-managed services
+    subgraph Docker [Docker Environment]
+        direction LR
+        A
+        E
+        L
+    end
+```
 
 ## Live Tableau Dashboard
 
